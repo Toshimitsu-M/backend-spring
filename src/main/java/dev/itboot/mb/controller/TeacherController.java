@@ -24,12 +24,10 @@ public class TeacherController {
 	//DI
 	private final TeacherService service;
 	
-	@GetMapping("/")
+	@GetMapping("/home")
 	public String getAllTeachers(Model model, @PageableDefault(size = 5) Pageable pageable) {
 		model.addAttribute("page", service.selectAll());
-		
-		//list.htmlを呼び出す
-		return "list";
+		return "home";
 	}
 	
 	@GetMapping("/add")

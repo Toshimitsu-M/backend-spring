@@ -1,11 +1,18 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout/layout}">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout/layout}">
+
 <head>
+<title>一般ユーザーページ</title>
 <meta charset="UTF-8" th:remove="tag">
 </head>
 <body>
+	<p>ようこそ<span sec:authentication="principal.loginUser.name">一般</span>さん</p>
+    <a href="index.html" th:href="@{/}">トップページへ</a>
+    <form method="post" action="index.html" th:action="@{/logout}">
+        <button type="submit">ログアウト</button>
+    </form>
 	<div layout:fragment="content" class="container-fluid">
-		<h4>MyBatis APP</h4>
+		<h4>講師ダッシュボード</h4>
 		<table class="table">
 		<!-- <table th:if="${page.totalPages > 0}" class="table"> -->
 			<thead>
@@ -19,7 +26,7 @@
 			<tbody>
 				<tr th:each="teacher : ${page}" th:object="${teacher}">
 					<td th:text="*{id}"></td>
-					<td th:text="*{userName}"></td>
+					<td th:text="*{name}"></td>
 					<td th:text="*{email}"></td>
 					<td class="py-1">
 						<a th:href="@{/edit/{id}(id=*{id})}" class="btn btn-outline-primary">
@@ -27,7 +34,7 @@
 							編集
 						</a>
 						<a th:href="@{/delete/{id} (id=*{id})}" class="btn btn-outline-danger">
-							<i class="bi bi=trash-fill"></i>
+							<i class="bi bi-trash-fill"></i>
 							削除
 						</a>
 					</td>
