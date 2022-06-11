@@ -1,5 +1,7 @@
 package dev.itboot.mb.model;
 
+import java.util.List;
+
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
@@ -9,7 +11,7 @@ import lombok.Setter;
 
 @Setter
 @Getter
-public class Teacher {
+public class LoginUser {
 	private Long id;
 	
 	@NotBlank
@@ -20,4 +22,11 @@ public class Teacher {
 	@Email
 	@Size(max = 254)
 	private String email;
+	
+	@NotBlank
+	@Size(max = 254)
+	private String password;
+	
+	@NotBlank
+	private List<String> roleList;
 }

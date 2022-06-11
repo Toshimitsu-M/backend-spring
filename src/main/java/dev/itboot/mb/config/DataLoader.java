@@ -15,7 +15,7 @@ public class DataLoader implements ApplicationRunner{
 	public void run(String...args) throws Exception{
 		for(int i=0;i<5;i++){
 			Teacher teacher = new Teacher();
-			teacher.setUserName("テスト");
+			teacher.setName("テスト");
 			teacher.setEmail("test@example.com");
 			service.save(teacher);
 			}
