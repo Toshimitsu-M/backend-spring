@@ -9,11 +9,15 @@ CREATE TABLE teacher (
  email VARCHAR(254) NOT NULL
 );
 
+
+
+--　ロール
 CREATE TABLE roles(
     id INTEGER PRIMARY KEY,
     name VARCHAR(32) NOT NULL
 );
 
+-- ユーザー
 CREATE TABLE login_user(
     id INTEGER PRIMARY KEY,
     name VARCHAR(128) NOT NULL,
@@ -21,6 +25,7 @@ CREATE TABLE login_user(
     password VARCHAR(128) NOT NULL
 );
 
+-- ユーザとロールの対応付け
 CREATE TABLE user_role(
     user_id INTEGER,
     role_id INTEGER,
