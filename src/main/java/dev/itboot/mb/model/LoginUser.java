@@ -9,14 +9,10 @@ import javax.validation.constraints.Size;
 import lombok.Getter;
 import lombok.Setter;
 
-@Setter
 @Getter
+@Setter
 public class LoginUser {
 	private Long id;
-	
-	@NotBlank
-	@Size(max = 60)
-	private String name;
 	
 	@NotBlank
 	@Email
@@ -24,9 +20,14 @@ public class LoginUser {
 	private String email;
 	
 	@NotBlank
+	@Size(max = 60)
+	private String name;
+	
+	@NotBlank
 	@Size(max = 254)
 	private String password;
 	
-	@NotBlank
 	private List<String> roleList;
 }
+
+//public record LoginUser(String email, String name, String password, List<String> roleList)

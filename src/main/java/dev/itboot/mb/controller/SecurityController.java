@@ -2,22 +2,27 @@ package dev.itboot.mb.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 
 
 
 @Controller
 public class SecurityController {
 
-    @GetMapping("/")
+    @GetMapping("/") //HTTPのGETリクエストを受け付ける
     public String index() {
-        return "index";
+        return "index"; //index.htmlをレスポンスする
     }
 
     @GetMapping("/login")
-    public String login() {
+    public String getlogin() {
         return "login";
     }
-
+    
+    @PostMapping("/login")
+    public String postlogin() {
+        return "home";
+    }
 //    @GetMapping("/home")
 //    public String home() {
 //        return "home";

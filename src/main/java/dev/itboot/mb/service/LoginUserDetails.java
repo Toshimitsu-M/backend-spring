@@ -3,7 +3,6 @@ package dev.itboot.mb.service;
 import java.util.Collection;
 
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import dev.itboot.mb.model.LoginUser;
@@ -11,14 +10,14 @@ import dev.itboot.mb.model.LoginUser;
 public class LoginUserDetails implements UserDetails {
 
     private final LoginUser loginUser;
-    private final Collection<? extends GrantedAuthority> authorities;
+//    private final Collection<? extends GrantedAuthority> authorities;
 
     public LoginUserDetails(LoginUser loginUser) {
         this.loginUser = loginUser;
-        this.authorities = loginUser.getRoleList()
-                .stream()
-                .map(role -> new SimpleGrantedAuthority(role))
-                .toList();
+//        this.authorities = loginUser.getRoleList()
+//                .stream()
+//                .map(role -> new SimpleGrantedAuthority(role))
+//                .toList();
     }
 
     public LoginUser getLoginUser() {
@@ -27,7 +26,8 @@ public class LoginUserDetails implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return authorities;
+		return null;
+//        return authorities;
     }
 
     @Override
@@ -40,21 +40,25 @@ public class LoginUserDetails implements UserDetails {
         return loginUser.getEmail();
     }
 
+    //ユーザが期限切れでなければtrueを返す
     @Override
     public boolean isAccountNonExpired() {
         return true;
     }
 
+    //ユーザがロックされていなければtrueを返す
     @Override
     public boolean isAccountNonLocked() {
         return true;
     }
 
+    //ユーザのパスワードが期限切れでなければtrueを返す
     @Override
     public boolean isCredentialsNonExpired() {
         return true;
     }
 
+    //ユーザが有効であればtrueを返す
     @Override
     public boolean isEnabled() {
         return true;
