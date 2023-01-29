@@ -12,12 +12,12 @@
 		WHERE id = #{id}
 	</select>
 	<insert id="insert">
-		INSERT INTO teacher(user_name, email)
+		INSERT INTO teacher(username, email)
 		VALUES(#{userName}, #{email})
 	</insert>
 	<update id="updateByPrimaryKey">
 		UPDATE teacher
-		SET user_name = #{userName}, email = #{email}
+		SET username = #{userName}, email = #{email}
 		WHERE id = #{id}
 	</update>
 	<delete id="deleteByPrimaryKey">

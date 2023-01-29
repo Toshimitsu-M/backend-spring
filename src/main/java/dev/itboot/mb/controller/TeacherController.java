@@ -42,7 +42,7 @@ public class TeacherController {
 		}
 		service.save(teacher);
 		
-		return "redirect:/";
+		return "redirect:/home";
 	}
 	
 	@GetMapping("/edit/{id}")
@@ -54,6 +54,6 @@ public class TeacherController {
 	@GetMapping("/delete/{id}")
 	public String deleteTeacher(@PathVariable Long id) {
 		service.deleteByPrimaryKey(id);
-		return "redirect:/";
+		return "redirect:/home";
 	}
 }

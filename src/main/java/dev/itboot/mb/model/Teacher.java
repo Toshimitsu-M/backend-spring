@@ -14,7 +14,7 @@ public class Teacher {
 	
 	@NotBlank
 	@Size(max = 60)
-	private String name;
+	private String userName;
 	
 	@NotBlank
 	@Email
