@@ -1,0 +1,54 @@
+@charset "UTF-8";
+/* 参照　https://webdesign-trends.net/entry/8148#_flex-basis */
+
+.header {
+	background-color: #cd5f01;
+	height: 100px;
+}
+
+.sidebar {
+	background-color: rgb(80, 81, 80);
+	float: left;
+	height: 750px;
+	width: 200px;
+}
+
+.content {
+	float: left;
+	height: 300px;
+}
+
+.footer {
+	background-color: green;
+	clear: left;
+	height: 100px;
+}
+
+.main {
+	display: flex;
+	flex-direction: row;
+	flex-grow: 1
+}
+
+.logout {
+	float: right;
+}
+.components {
+	display: flex;
+	flex-direction: row;
+	flex-basis: 1000px;
+	flex-grow: 1;
+}
+
+/* ダークモードのログイン前のヘッダ用 */
+/* .form-control-dark {
+  color: #fff;
+  background-color: var(--bs-dark);
+  border-color: var(--bs-gray);
+}
+.form-control-dark:focus {
+  color: #fff;
+  background-color: var(--bs-dark);
+  border-color: #fff;
+  box-shadow: 0 0 0 .25rem rgba(255, 255, 255, .25);
+} */

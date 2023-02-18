@@ -1,0 +1,39 @@
+<div xmlns:th="http://www.thymeleaf.org"
+	th:fragment="dashbord_fragment">
+	<div class=content>
+				<h4>講師ダッシュボード</h4>
+				<table class="table">
+					<!-- <table th:if="${page.totalPages > 0}" class="table"> -->
+					<thead>
+						<tr>
+							<th>#</th>
+							<th>名前</th>
+							<th>E-Mail</th>
+							<th></th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr th:each="teacher : ${page}" th:object="${teacher}">
+							<td th:text="*{id}"></td>
+							<td th:text="*{userName}"></td>
+							<td th:text="*{email}"></td>
+							<td class="py-1"><a th:href="@{/edit/{id}(id=*{id})}"
+								class="btn btn-outline-primary"> <i
+									class="bi bi-pencil-fill"></i> 編集
+							</a> <a th:href="@{/delete/{id} (id=*{id})}"
+								class="btn btn-outline-danger"> <i class="bi bi-trash-fill"></i>
+									削除
+							</a></td>
+						</tr>
+					</tbody>
+				</table>
+				<div class="row">
+					<div class="col-auto me-auto">
+						<a th:href="@{/add}" class="btn btn-outline-primary"> <i
+							class="bi bi-plus-lg"></i> 新規追加
+						</a>
+					</div>
+					<!-- <div th:replace="~{fragments/pagination :: pagination}"></div> -->
+				</div>
+			</div>
+		</div>

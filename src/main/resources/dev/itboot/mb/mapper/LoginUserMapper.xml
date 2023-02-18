@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="dev.itboot.mb.mapper.LoginUserMapper">
 	<select id="selectByEmail" resultType="dev.itboot.mb.model.LoginUser">
-		SELECT u.id, u.email, u.name AS user_name, u.password, r.name
+		SELECT u.id, u.email, u.name, u.password, r.r_name
 		FROM login_user u
 		JOIN user_role ur
 			ON u.id = ur.user_id

@@ -14,7 +14,7 @@ CREATE TABLE teacher (
 --　ロール
 CREATE TABLE roles(
     id INTEGER PRIMARY KEY,
-    name VARCHAR(32) NOT NULL
+    r_name VARCHAR(32) NOT NULL
 );
 
 -- ユーザー

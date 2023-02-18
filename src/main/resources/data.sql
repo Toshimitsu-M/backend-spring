@@ -1,7 +1,11 @@
 INSERT INTO teacher(username,email) VALUES('長男','tyounan@example.com'); 
+INSERT INTO teacher(username,email) VALUES('次男','jinan@example.com'); 
+INSERT INTO teacher(username,email) VALUES('三男','sannan@example.com'); 
 
-INSERT INTO roles(id, name) VALUES(1, 'ROLE_GENERAL');
-INSERT INTO roles(id, name) VALUES(2, 'ROLE_ADMIN');
+
+
+INSERT INTO roles(id, r_name) VALUES(1, 'ROLE_GENERAL');
+INSERT INTO roles(id, r_name) VALUES(2, 'ROLE_ADMIN');
 
 -- password = "general"
 --INSERT INTO login_user(id, name, email, password) VALUES(1, '一般太郎', 'general@example.com', '$2a$10$6fPXYK.C9rCWUBifuqBIB.GRNU.nQtBpdzkkKis8ETaKVKxNo/ltO');

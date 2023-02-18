@@ -39,11 +39,24 @@ public class SecurityConfig {
 				.failureUrl("/login?error") // ログイン失敗後のリダイレクト先URL
 				.permitAll()) // ログイン画面は未ログインでもアクセス可能
 				.logout(logout -> logout // ログアウトの設定記述開始
-						.logoutSuccessUrl("/")) // ログアウト成功後のリダイレク先URL
+						.logoutSuccessUrl("/")
+						.invalidateHttpSession(true)                 
+						
+						) // ログアウト成功後のリダイレク先URL
 				.authorizeHttpRequests(
 						authz -> authz.requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll()
 								.mvcMatchers("/").permitAll().mvcMatchers("/general").hasRole("GENERAL")
 								.mvcMatchers("/admin").hasRole("ADMIN").anyRequest().authenticated());
+//		http
+//        .logout(logout -> logout                                                
+//            .logoutUrl("/logout")                                            
+//            .logoutSuccessUrl("/index")                                      
+//            .logoutSuccessHandler(logoutSuccessHandler)                         
+//            .invalidateHttpSession(true)                                        
+//            .addLogoutHandler(logoutHandler)                                    
+//            .deleteCookies(cookieNamesToClear))
+//            );    
+		//参照先→https://spring.pleiades.io/spring-security/reference/servlet/authentication/logout.html
 //		http
 //        .authorizeHttpRequests((authz) -> authz
 //            .anyRequest().authenticated()
@@ -54,7 +67,7 @@ public class SecurityConfig {
 
 //	BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 //	System.out.@println(encoder.encode("元のパスワード"));
-	
+
 	@Bean
 	public PasswordEncoder passwordEncoder() {
 		return new BCryptPasswordEncoder();

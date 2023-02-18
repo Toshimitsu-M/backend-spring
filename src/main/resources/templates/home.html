@@ -1,56 +1,29 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout/layout}">
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout/layout}" >
 
 <head>
-<title>一般ユーザーページ</title>
+<title>ホームページ</title>
 <meta charset="UTF-8" th:remove="tag">
+<link th:href="@{/css/layout.css}" rel="stylesheet">
 </head>
 <body>
-	<p>ようこそ<span sec:authentication="principal.loginUser.name">一般</span>さん</p>
-    <a href="index.html" th:href="@{/}">トップページへ</a>
-    <form method="post" action="index.html" th:action="@{/logout}">
-        <button type="submit">ログアウト</button>
-    </form>
+	<a href="index.html" th:href="@{/}">トップページへ</a>
 	<div layout:fragment="content" class="container-fluid">
-		<h4>講師ダッシュボード</h4>
-		<table class="table">
-		<!-- <table th:if="${page.totalPages > 0}" class="table"> -->
-			<thead>
-				<tr>
-					<th>#</th>
-					<th>名前</th>
-					<th>E-Mail</th>
-					<th></th>
-				</tr>
-			</thead>
-			<tbody>
-				<tr th:each="teacher : ${page}" th:object="${teacher}">
-					<td th:text="*{id}"></td>
-					<td th:text="*{userName}"></td>
-					<td th:text="*{email}"></td>
-					<td class="py-1">
-						<a th:href="@{/edit/{id}(id=*{id})}" class="btn btn-outline-primary">
-							<i class="bi bi-pencil-fill"></i>
-							編集
-						</a>
-						<a th:href="@{/delete/{id} (id=*{id})}" class="btn btn-outline-danger">
-							<i class="bi bi-trash-fill"></i>
-							削除
-						</a>
-					</td>
-				</tr>
-			</tbody>
-		</table>
-		
-		<div class="row">
-			<div class="col-auto me-auto">
-				<a th:href="@{/add}" class="btn btn-outline-primary">
-					<i class="bi bi-plus-lg"></i>
-					新規追加
-				</a>
+		<!-- <div class=header>
+			<div th:replace="fragments/header :: header_fragment"></div>
+		</div> -->
+		<div class=main>
+			<nav class="sidebar">
+				<div th:replace="~{fragments/sidebar::layout-sidebar}"></div>
+			</nav>
+			<div class=content>
+				<div th:replace="~{contents/dashbord::dashbord_fragment}"></div>
 			</div>
-			<!-- <div th:replace="~{fragments/pagination :: pagination}"></div> -->
 		</div>
+		<div th:replace="fragments/footer :: footer_fragment"></div>
 	</div>
 </body>
 </html>

@@ -32,4 +32,15 @@ public class SecurityController {
     public String admin() {
         return "admin";
     }
+    
+    @GetMapping("/logout")
+    public String getlogout() {
+        return "index";
+    }
+    
+//    @GetMapping("/delete/{id}")
+//	public String deleteTeacher(@PathVariable Long id) {
+//		service.deleteByPrimaryKey(id);
+//		return "redirect:/home";
+//	}
 }
