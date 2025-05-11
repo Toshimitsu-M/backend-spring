@@ -10,25 +10,6 @@ import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
 public class SecurityConfig {
-//    @Bean
-//    public DataSource dataSource() {
-//        return new EmbeddedDatabaseBuilder()
-//            .setType(EmbeddedDatabaseType.H2)
-//            .addScript(JdbcDaoImpl.DEFAULT_USER_SCHEMA_DDL_LOCATION)
-//            .build();
-//    }
-
-//    @Bean
-//    public UserDetailsManager users(DataSource dataSource) {
-//        UserDetails user = User.withDefaultPasswordEncoder()
-//            .username("user")
-//            .password("password")
-//            .roles("ROLE")
-//            .build();
-//        JdbcUserDetailsManager users = new JdbcUserDetailsManager(dataSource);
-//        users.createUser(user);
-//        return users;
-//    }
 
 	@Bean
 	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
@@ -40,33 +21,24 @@ public class SecurityConfig {
 				.permitAll()) // ログイン画面は未ログインでもアクセス可能
 				.logout(logout -> logout // ログアウトの設定記述開始
 						.logoutSuccessUrl("/")
-						.invalidateHttpSession(true)                 
-						
-						) // ログアウト成功後のリダイレク先URL
+						.invalidateHttpSession(true)
+
+				) // ログアウト成功後のリダイレク先URL
 				.authorizeHttpRequests(
 						authz -> authz.requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll()
-								.mvcMatchers("/").permitAll().mvcMatchers("/general").hasRole("GENERAL")
-								.mvcMatchers("/admin").hasRole("ADMIN").anyRequest().authenticated());
-//		http
-//        .logout(logout -> logout                                                
-//            .logoutUrl("/logout")                                            
-//            .logoutSuccessUrl("/index")                                      
-//            .logoutSuccessHandler(logoutSuccessHandler)                         
-//            .invalidateHttpSession(true)                                        
-//            .addLogoutHandler(logoutHandler)                                    
-//            .deleteCookies(cookieNamesToClear))
-//            );    
-		//参照先→https://spring.pleiades.io/spring-security/reference/servlet/authentication/logout.html
-//		http
-//        .authorizeHttpRequests((authz) -> authz
-//            .anyRequest().authenticated()
-//        )
-//        .httpBasic();
+								.mvcMatchers("/").permitAll()
+								.mvcMatchers("/general").hasRole("GENERAL")
+								.mvcMatchers("/admin").hasRole("ADMIN")
+								.mvcMatchers("/api/anime").permitAll()
+								.mvcMatchers("/characterComment/next-sequence").permitAll()
+								.mvcMatchers("/characterComment/**").permitAll()
+								.anyRequest().authenticated())
+				.csrf().disable();
+
+		;
+
 		return http.build();
 	}
-
-//	BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-//	System.out.@println(encoder.encode("元のパスワード"));
 
 	@Bean
 	public PasswordEncoder passwordEncoder() {
@@ -74,57 +46,3 @@ public class SecurityConfig {
 	}
 
 }
-
-//@Configuration
-//public class SecurityConfig {
-//
-//    @Bean
-//    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-//        http.formLogin(login -> login
-//                .loginProcessingUrl("/login")
-//                .loginPage("/login")
-//                .defaultSuccessUrl("/")
-//                .failureUrl("/login?error")
-//                .permitAll()
-//        ).logout(logout -> logout
-//                .logoutSuccessUrl("/")
-//        ).authorizeHttpRequests(authz -> authz
-//                .requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll()
-//                .mvcMatchers("/").permitAll()
-//                .mvcMatchers("/general").hasRole("ROLE_GENERAL")
-//                .mvcMatchers("/admin").hasRole("ROLE_ADMIN")
-//                .anyRequest().authenticated()
-//        );
-//        return http.build();
-//    }
-
-//    
-
-//    @Configuration
-//    public class SecurityConfiguration {
-//
-//        @Bean
-//        public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-//            http
-//                .authorizeHttpRequests((authz) -> authz
-//                    .anyRequest().authenticated()
-//                )
-//                .httpBasic(withDefaults());
-//            return http.build();
-//        }
-//
-//    }
-//    
-//    
-//    @Configuration
-//    public class SecurityConfiguration {
-//
-//        @Bean
-//        public WebSecurityCustomizer webSecurityCustomizer() {
-//            return (web) -> web.ignoring().antMatchers("/ignore1", "/ignore2");
-//        }
-//
-//    }
-//    
-
-//}

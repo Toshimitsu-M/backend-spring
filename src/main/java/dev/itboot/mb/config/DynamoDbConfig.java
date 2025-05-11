@@ -1,0 +1,34 @@
+package dev.itboot.mb.config;
+
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+
+
+@Configuration
+public class DynamoDbConfig {
+
+    @Value("${aws.dynamodb.endpoint}")
+    private String dynamoDbEndpoint;
+
+    @Value("${aws.dynamodb.region}")
+    private String region;
+
+    @Bean
+    public DynamoDbClient dynamoDbClient() {
+        return DynamoDbClient.builder()
+                .endpointOverride(URI.create(dynamoDbEndpoint))
+                .region(Region.of(region))
+                .credentialsProvider(StaticCredentialsProvider.create(
+                        AwsBasicCredentials.create("dummy", "dummy") // Localでは適当でOK
+                ))
+                .build();
+    }
+
+    @Bean
+    public DynamoDbEnhancedClient enhancedClient(DynamoDbClient dynamoDbClient) {
+        return DynamoDbEnhancedClient.builder()
+                .dynamoDbClient(dynamoDbClient)
+                .build();
+    }
+}
+
