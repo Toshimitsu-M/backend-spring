@@ -2,6 +2,8 @@ package com.example.charactercomments.controller;
 
 import com.example.charactercomments.model.CharacterComment;
 import com.example.charactercomments.service.CharacterCommentService;
+
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -15,6 +17,13 @@ public class CharacterCommentController {
     public CharacterCommentController(CharacterCommentService service) {
         this.service = service;
     }
+
+    // コメントシーケンス取得
+	@GetMapping("/next-sequence")
+	public ResponseEntity<Integer> getNextSequence() {
+		return ResponseEntity.ok(sequenceService.getNextSequence("comment_id"));
+	}
+
 
     @PostMapping
     public CharacterComment postComment(@RequestBody CharacterComment comment) {
