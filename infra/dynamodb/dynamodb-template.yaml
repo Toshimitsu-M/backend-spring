@@ -1,0 +1,17 @@
+# infra/dynamodb-template.yaml
+AWSTemplateFormatVersion: '2010-09-09'
+Resources:
+  MyItemsTable:
+    Type: AWS::DynamoDB::Table
+    Properties:
+      TableName: MyItems
+      AttributeDefinitions:
+        - AttributeName: id
+          AttributeType: S
+      KeySchema:
+        - AttributeName: id
+          KeyType: HASH
+      BillingMode: PAY_PER_REQUEST
+      Tags:
+        - Key: Project
+          Value: spring-dynamodb-sample

@@ -1,0 +1,24 @@
+# ユーザー情報を管理するテーブル
+TableName: Users
+
+AttributeDefinitions:
+  - AttributeName: userId      # ユーザーID（PK）
+    AttributeType: S
+  - AttributeName: createdAt   # ユーザー作成日時（SK候補、履歴や並び順が必要な場合）
+
+KeySchema:
+  - AttributeName: userId
+    KeyType: HASH
+
+# 備考:
+# - ユーザーは一意なIDで管理（例: "user_abc123"）
+# - createdAt を Sort Key にするなら履歴管理や新規順ソートが可能になる
+# - 基本的には PK のみの単純構成で十分
+
+# 想定される属性
+Attributes:
+  - userId: string   # ユーザー一意ID
+  - username: string # 表示名（ニックネームなど）
+  - email: string    # メールアドレス
+  - createdAt: string # アカウント作成日時（ISO8601）
+  - iconUrl: string  # アイコン画像URL

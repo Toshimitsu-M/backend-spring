@@ -1,0 +1,20 @@
+# 自動採番や連番管理用のテーブル（シンプルなシーケンス）
+TableName: Sequences
+
+AttributeDefinitions:
+  - AttributeName: keyName     # シーケンス名（PK）
+    AttributeType: S
+
+KeySchema:
+  - AttributeName: keyName
+    KeyType: HASH
+
+# 備考:
+# - keyName ごとにシーケンス番号を管理（例: "characterId" や "commentId"）
+# - UpdateItem + ADD でインクリメントできる
+# - 複数のシーケンス用途（例: キャラID, ユーザーID）に対応可能
+
+# 想定される属性
+Attributes:
+  - keyName: string     # シーケンスのキー名（例: "characterId"）
+  - currentValue: number # 現在の値（例: 1023）

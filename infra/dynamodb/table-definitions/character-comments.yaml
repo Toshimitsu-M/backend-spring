@@ -1,0 +1,40 @@
+# CHARACTER_COMMENTS テーブル定義
+# キャラクターに対するユーザーのコメント履歴を保持
+
+TableName: characterComments
+
+AttributeDefinitions:
+  - AttributeName: commentId        # コメントごとの一意なID
+    AttributeType: S
+  - AttributeName: updatedAt        # コメントの更新日時（ISO8601）
+    AttributeType: S
+  - AttributeName: gsiPk            # GSI用のパーティションキー（characterId#userId 形式）
+
+KeySchema:
+  - AttributeName: commentId        # パーティションキー（PK）
+    KeyType: HASH
+  - AttributeName: updatedAt        # ソートキー（SK）として履歴管理に使う
+    KeyType: RANGE
+
+BillingMode: PAY_PER_REQUEST         # 従量課金制（オンデマンド）
+
+GlobalSecondaryIndexes:
+  - IndexName: GSI1
+    KeySchema:
+      - AttributeName: gsiPk        # キャラ + ユーザーでの検索用
+        KeyType: HASH
+    Projection:
+      ProjectionType: ALL
+
+# メモ：
+# - commentId + updatedAt により履歴バージョン管理が可能
+# - gsiPk（例：char_123#user_456）でキャラ＋ユーザーの全コメントを取得可能
+
+# 想定される属性（参考：属性スキーマには記載されない）
+# - commentId: コメントID
+# - updatedAt: 更新日時
+# - characterId: 対象キャラクターID
+# - userId: コメント投稿者ID
+# - commentText: コメント本文
+# - gsiPk: characterId#userId
+

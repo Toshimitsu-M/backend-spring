@@ -1,0 +1,26 @@
+# テーブル名
+TableName: xxx
+
+# 属性定義（型情報）
+AttributeDefinitions:
+  - AttributeName: xxx
+    AttributeType: S | N | B
+
+# プライマリキー定義
+KeySchema:
+  - AttributeName: xxx
+    KeyType: HASH | RANGE
+
+# グローバルセカンダリインデックス
+GlobalSecondaryIndexes:
+  - IndexName: GSI1
+    KeySchema:
+      - AttributeName: xxx
+        KeyType: HASH
+    Projection:
+      ProjectionType: ALL
+
+# その他設計メモ（コメントとして）
+# - 想定アクセスパターン:
+# - 補足：
+# - 注意点：
