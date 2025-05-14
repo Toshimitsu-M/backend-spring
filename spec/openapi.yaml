@@ -1,0 +1,90 @@
+openapi: 3.0.0
+info:
+  title: Character Comment API
+  version: 1.0.0
+  description: 任意のキャラクターに対するコメント投稿API
+
+paths:
+  /characterComment/all/{id}:
+    get:
+      summary: 任意のキャラクターのコメントリスト取得
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: キャラクターの anilistId
+          schema:
+            type: string
+      responses:
+        '200':
+          description: コメントリスト
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/CharacterComment'
+
+  /characterComment/process:
+    post:
+      summary: コメントの追加・更新
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CharacterComment'
+      responses:
+        '200':
+          description: 結果メッセージ
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Result'
+
+  /characterComment/delete/{id}:
+    delete:
+      summary: コメントの削除
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: コメントID
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: 結果メッセージ
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Result'
+
+components:
+  schemas:
+    CharacterComment:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: コメントの連番
+        anilistId:
+          type: string
+          description: キャラクターID（AnilistのID）
+        userId:
+          type: string
+          description: コメント投稿者のユーザーID
+        comment:
+          type: string
+          description: コメント内容
+      required:
+        - anilistId
+        - userId
+        - comment
+
+    Result:
+      type: object
+      properties:
+        result:
+          type: string
+          description: 成功/失敗などのメッセージ
