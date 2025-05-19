@@ -6,6 +6,8 @@ import org.springframework.stereotype.Service;
 import software.amazon.awssdk.enhanced.dynamodb.*;
 import software.amazon.awssdk.enhanced.dynamodb.model.*;
 import software.amazon.awssdk.services.dynamodb.DynamoDbClient;
+import java.util.Map;
+import software.amazon.awssdk.services.dynamodb.model.AttributeValue;
 
 @Service
 @RequiredArgsConstructor
@@ -28,7 +30,7 @@ public class SequenceService {
                         ":inc", AttributeValue.fromN("1"),
                         ":zero", AttributeValue.fromN("0")
                 ))
-                .returnValues(ReturnValue.ALL_NEW)
+                .build()
         );
 
         return updated.getValue();

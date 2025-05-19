@@ -34,7 +34,6 @@ public class CharacterCommentController {
 	@GetMapping("/all/{id}")
 	public List<CharacterComment> getAllCharacterComments(@PathVariable String id, Model model) {
 		return service.selectByCharacterId(id);
-
 	}
 
 	// コメントシーケンス取得
