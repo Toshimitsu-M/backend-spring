@@ -2,6 +2,8 @@ package dev.itboot.mb.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+
+import org.springframework.beans.factory.annotation.Value;
 import software.amazon.awssdk.services.dynamodb.DynamoDbClient;
 // import software.amazon.awssdk.services.dynamodb.DynamoDbEnhancedClient;
 import software.amazon.awssdk.auth.credentials.AwsBasicCredentials;
