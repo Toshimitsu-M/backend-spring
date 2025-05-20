@@ -1,0 +1,6 @@
+aws:
+  dynamodb:
+    region: ap-northeast-1
+    endpoint: http://localhost:8000
+    accessKeyId: dummy
+    secretAccessKey: dummy
