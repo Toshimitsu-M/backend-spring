@@ -33,3 +33,6 @@ build/
 ### VS Code ###
 .vscode/
 application-prod.yaml
+infra/infra.drawio
+infra/dynamodb/Dockerfile
+infra/infra.yaml
