@@ -19,22 +19,14 @@ public class CharacterCommentService {
     private final SequenceService sequenceService;
 
     // キャラクターIDでコメントリスト取得
-    public List<CharacterComment> selectByCharacterId(String characterId, String userId) {
-        return repository.findByGsiPk(characterId + "#" + userId);
-    }
-
-    // キャラクターIDでコメントリスト取得
     public List<CharacterComment> selectByCharacterId(String characterId) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'selectByCharacterId'");
+        return repository.findByCharacterId(characterId);
     }
 
     // コメントの追加、編集
     public CharacterComment save(CharacterComment comment) {
-
-        // コメントシーケンス取得
-        sequenceService.getNextSequence("comment_id");
-
+        // コメントシーケンス取得　UUIDにするか検討中 comment.setCommentId(UUID.randomUUID().toString());
+        comment.setCommentId(String.valueOf(sequenceService.getNextSequence("comment_id")));
         comment.setUpdatedAt(Instant.now().toString());
         comment.setGsiPk(comment.getCharacterId() + "#" + comment.getUserId());
         return repository.save(comment);
@@ -42,8 +34,8 @@ public class CharacterCommentService {
 
     // コメント削除
     public void deleteByPrimaryKey(Long id) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'deleteByPrimaryKey'");
+        
+        repository.deleteById(id.toString());
     }
 
 }

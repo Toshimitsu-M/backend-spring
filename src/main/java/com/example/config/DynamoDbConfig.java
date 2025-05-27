@@ -23,39 +23,11 @@ public class DynamoDbConfig {
 
         if (props.getEndpoint() != null && !((String) props.getEndpoint()).isBlank()) {
             builder.endpointOverride(URI.create((String) props.getEndpoint()))
-                   .credentialsProvider(StaticCredentialsProvider.create(
-                       AwsBasicCredentials.create(props.getAccessKeyId(), props.getSecretAccessKey())
-                   ));
+                    .credentialsProvider(StaticCredentialsProvider.create(
+                            AwsBasicCredentials.create(props.getAccessKeyId(), props.getSecretAccessKey())));
         }
 
         return builder.build();
     }
-}
 
-@Configuration
-public class DynamoDbConfig {
-
-    @Value("${aws.dynamodb.endpoint}")
-    private String dynamoDbEndpoint;
-
-    @Value("${aws.dynamodb.region}")
-    private String region;
-
-    @Bean
-    public DynamoDbClient dynamoDbClient() {
-        return DynamoDbClient.builder()
-                .endpointOverride(URI.create(dynamoDbEndpoint))
-                .region(Region.of(region))
-                .credentialsProvider(StaticCredentialsProvider.create(
-                        AwsBasicCredentials.create("dummy", "dummy") // Localでは適当でOK
-                ))
-                .build();
-    }
-
-    @Bean
-    public DynamoDbEnhancedClient enhancedClient(DynamoDbClient dynamoDbClient) {
-        return DynamoDbEnhancedClient.builder()
-                .dynamoDbClient(dynamoDbClient)
-                .build();
-    }
 }

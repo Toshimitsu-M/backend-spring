@@ -3,11 +3,12 @@ package com.example.charactercomments.model;
 import software.amazon.awssdk.enhanced.dynamodb.mapper.annotations.*;
 import lombok.*;
 
+
 @DynamoDbBean
-@Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
+@Data
 public class CharacterComment {
 
     private String commentId;
@@ -17,13 +18,78 @@ public class CharacterComment {
     private String commentText;
     private String gsiPk;
 
+    // ========= テーブルの主キー =========
     @DynamoDbPartitionKey
-    public String getCommentId() { return commentId; }
+    public String getCommentId() {
+        return commentId;
+    }
+
+    public void setCommentId(String commentId) {
+        this.commentId = commentId;
+    }
 
     @DynamoDbSortKey
-    public String getUpdatedAt() { return updatedAt; }
+    public String getUpdatedAt() {
+        return updatedAt;
+    }
 
-    @DynamoDbSecondaryPartitionKey(indexNames = "GSI1")
-    public String getGsiPk() { return gsiPk; }
+    public void setUpdatedAt(String updatedAt) {
+        this.updatedAt = updatedAt;
+    }
+
+    // ========= 属性（キャラ・ユーザーIDなど） =========
+    public String getCharacterId() {
+        return characterId;
+    }
+
+    public void setCharacterId(String characterId) {
+        this.characterId = characterId;
+    }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
+
+    public String getCommentText() {
+        return commentText;
+    }
+
+    public void setCommentText(String commentText) {
+        this.commentText = commentText;
+    }
+
+    // ========= GSI: characterId 単体検索用 =========
+    @DynamoDbSecondaryPartitionKey(indexNames = {"GSI_CharacterId"})
+    public String getCharacterIdForGsi() {
+        return characterId;
+    }
+
+    public void setCharacterIdForGsi(String characterId) {
+        this.characterId = characterId;
+    }
+
+    // ========= GSI: userId 単体検索用 =========
+    @DynamoDbSecondaryPartitionKey(indexNames = {"GSI_UserId"})
+    public String getUserIdForGsi() {
+        return userId;
+    }
+
+    public void setUserIdForGsi(String userId) {
+        this.userId = userId;
+    }
+
+    // ========= GSI: characterId#userId 検索用 =========
+    @DynamoDbSecondaryPartitionKey(indexNames = {"GSI_CharacterUser"})
+    public String getGsiPk() {
+        return gsiPk;
+    }
+
+    public void setGsiPk(String gsiPk) {
+        this.gsiPk = gsiPk;
+    }
 }
 

@@ -8,7 +8,11 @@ AttributeDefinitions:
     AttributeType: S
   - AttributeName: updatedAt        # コメントの更新日時（ISO8601）
     AttributeType: S
-  - AttributeName: gsiPk            # GSI用のパーティションキー（characterId#userId 形式）
+  - AttributeName: gsiPk            # GSI1: characterId#userId
+    AttributeType: S
+  - AttributeName: userId           # GSI2: userId で検索
+    AttributeType: S
+  - AttributeName: characterId      # GSI3: characterId で検索
 
 KeySchema:
   - AttributeName: commentId        # パーティションキー（PK）
@@ -19,12 +23,27 @@ KeySchema:
 BillingMode: PAY_PER_REQUEST         # 従量課金制（オンデマンド）
 
 GlobalSecondaryIndexes:
-  - IndexName: GSI1
+  - IndexName: GSI1_CharacterUser
     KeySchema:
-      - AttributeName: gsiPk        # キャラ + ユーザーでの検索用
+      - AttributeName: gsiPk        # characterId#userId
         KeyType: HASH
     Projection:
       ProjectionType: ALL
+
+  - IndexName: GSI2_User
+    KeySchema:
+      - AttributeName: userId       # userId -> 全コメント
+        KeyType: HASH
+    Projection:
+      ProjectionType: ALL
+
+  - IndexName: GSI3_Character
+    KeySchema:
+      - AttributeName: characterId  # characterId -> 全コメント
+        KeyType: HASH
+    Projection:
+      ProjectionType: ALL
+
 
 # メモ：
 # - commentId + updatedAt により履歴バージョン管理が可能
@@ -37,4 +56,3 @@ GlobalSecondaryIndexes:
 # - userId: コメント投稿者ID
 # - commentText: コメント本文
 # - gsiPk: characterId#userId
-
