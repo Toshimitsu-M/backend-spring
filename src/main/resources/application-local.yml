@@ -1,0 +1,47 @@
+aws:
+  dynamodb:
+    region: ap-northeast-1
+    endpoint: http://localhost:8000
+    accessKeyId: dummy
+    secretAccessKey: dummy
+
+mybatis:
+  configuration:
+    map-underscore-to-camel-case: true
+  type-aliases-package: com.example.model
+  mapper-locations: classpath*:/com/example/mapper/*.xml
+
+spring:
+  main:
+    allow-circular-references: true
+
+  # Oracle DB設定（必要に応じてコメントを外してください）
+  # datasource:
+  #   url: jdbc:oracle:thin:@localhost:1521/XEPDB1
+  #   # url: jdbc:oracle:thin:@oracle-xe:1521/XEPDB1
+  #   # url: jdbc:oracle:thin:@host.docker.internal:1521/XEPDB1
+  #   username: minami
+  #   password: minami
+  #   driver-class-name: oracle.jdbc.OracleDriver
+  #   hikari:
+  #     initialization-fail-timeout: 0
+
+  jpa:
+    defer-datasource-initialization: true
+    generate-ddl: false
+    hibernate:
+      ddl-auto: none
+
+logging:
+  level:
+    com:
+      example:
+        mapper: debug
+    org:
+      springframework:
+        web: DEBUG
+        security: DEBUG
+
+# spring:
+#   autoconfigure:
+#     exclude: org.springframework.boot.devtools.autoconfigure.DevToolsDataSourceAutoConfiguration

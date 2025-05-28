@@ -1,4 +1,6 @@
 aws:
   dynamodb:
-    endpoint: https://dynamodb.ap-northeast-1.amazonaws.com
     region: ap-northeast-1
+    endpoint:  # 空 → SDKが自動設定
+    accessKeyId: ${AWS_ACCESS_KEY_ID:}
+    secretAccessKey: ${AWS_SECRET_ACCESS_KEY:}
