@@ -1,5 +1,4 @@
 {
-    "sequence_id": "comment_id",
-    "value": 0
-  }
-  
+  "keyName": { "S": "commentId" },
+  "currentValue": { "N": 0 }
+}

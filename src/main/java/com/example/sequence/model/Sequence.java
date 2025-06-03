@@ -9,11 +9,11 @@ import software.amazon.awssdk.enhanced.dynamodb.mapper.annotations.*;
 @Builder
 @DynamoDbBean
 public class Sequence {
-    private String sequenceId;
-    private Long value;
+    private String keyName;
+    private Long currentValue;
 
     @DynamoDbPartitionKey
-    public String getSequenceId() {
-        return sequenceId;
+    public String getKeyName() {
+        return keyName;
     }
 }

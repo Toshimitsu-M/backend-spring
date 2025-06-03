@@ -1,41 +1,45 @@
 package com.example.sequence.service;
 
-import com.example.sequence.model.Sequence;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import software.amazon.awssdk.enhanced.dynamodb.*;
-import software.amazon.awssdk.enhanced.dynamodb.model.*;
 import software.amazon.awssdk.services.dynamodb.DynamoDbClient;
+
+import java.util.HashMap;
 import java.util.Map;
+
+import software.amazon.awssdk.services.dynamodb.model.AttributeAction;
 import software.amazon.awssdk.services.dynamodb.model.AttributeValue;
+import software.amazon.awssdk.services.dynamodb.model.AttributeValueUpdate;
+import software.amazon.awssdk.services.dynamodb.model.ReturnValue;
+import software.amazon.awssdk.services.dynamodb.model.UpdateItemRequest;
+import software.amazon.awssdk.services.dynamodb.model.UpdateItemResponse;
 
 @Service
 @RequiredArgsConstructor
 public class SequenceService {
 
-    private final DynamoDbClient dynamoDbClient;
+        private final DynamoDbClient dynamoDbClient;
 
-    public long getNextSequence(String sequenceName) {
-        DynamoDbEnhancedClient enhancedClient = DynamoDbEnhancedClient.builder()
-                .dynamoDbClient(dynamoDbClient)
-                .build();
+        public long getNextSequence(String sequenceName) {
 
-        DynamoDbTable<Sequence> table = enhancedClient.table("SEQUENCES", TableSchema.fromBean(Sequence.class));
+                Map<String, AttributeValue> key = new HashMap<>();
+                key.put("keyName", AttributeValue.builder().s(sequenceName).build());
 
-        // 条件付き更新（value + 1）
-        // Sequence updated = table.updateItem(r -> r
-        //         .key(Key.builder().partitionValue(sequenceName).build())
-        //         .updateExpression("SET #v = if_not_exists(#v, :zero) + :inc")
-        //         .expressionAttributeNames(Map.of("#v", "value"))
-        //         .expressionAttributeValues(Map.of(
-        //                 ":inc", AttributeValue.fromN("1"),
-        //                 ":zero", AttributeValue.fromN("0")
-        //         ))
-        //         .build()
-        // );
+                Map<String, AttributeValueUpdate> updates = new HashMap<>();
+                updates.put("currentValue", AttributeValueUpdate.builder()
+                                .action(AttributeAction.ADD)
+                                .value(AttributeValue.builder().n("1").build())
+                                .build());
 
-        // return updated.getValue();
-        return 1L; // TODO: ここは一時的に1を返すようにしているので、後で修正すること
-    }
+                UpdateItemRequest request = UpdateItemRequest.builder()
+                                .tableName("Sequences")
+                                .key(key)
+                                .attributeUpdates(updates)
+                                .returnValues(ReturnValue.UPDATED_NEW)
+                                .build();
+
+                UpdateItemResponse response = dynamoDbClient.updateItem(request);
+                String newValue = response.attributes().get("currentValue").n();
+                return Long.parseLong(newValue);
+        }
 }
-

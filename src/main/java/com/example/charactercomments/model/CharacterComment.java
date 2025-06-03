@@ -11,7 +11,7 @@ import lombok.*;
 @Data
 public class CharacterComment {
 
-    private String commentId;
+    private Long commentId;
     private String updatedAt;
     private String characterId;
     private String userId;
@@ -20,11 +20,11 @@ public class CharacterComment {
 
     // ========= テーブルの主キー =========
     @DynamoDbPartitionKey
-    public String getCommentId() {
+    public Long getCommentId() {
         return commentId;
     }
 
-    public void setCommentId(String commentId) {
+    public void setCommentId(Long commentId) {
         this.commentId = commentId;
     }
 

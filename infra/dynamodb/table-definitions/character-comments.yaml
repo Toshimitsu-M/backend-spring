@@ -5,7 +5,7 @@ TableName: characterComments
 
 AttributeDefinitions:
   - AttributeName: commentId        # コメントごとの一意なID
-    AttributeType: S
+    AttributeType: N
   - AttributeName: updatedAt        # コメントの更新日時（ISO8601）
     AttributeType: S
   - AttributeName: gsiPk            # GSI1: characterId#userId
