@@ -1,11 +1,14 @@
 package com.example.charactercomments.service;
 
+import com.example.charactercomments.controller.CharacterCommentController;
 import com.example.charactercomments.model.CharacterComment;
 import com.example.charactercomments.repository.CharacterCommentRepository;
 import com.example.sequence.service.SequenceService;
 
 import lombok.RequiredArgsConstructor;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import java.time.Instant;
@@ -18,9 +21,15 @@ public class CharacterCommentService {
     private final CharacterCommentRepository repository;
     private final SequenceService sequenceService;
 
+    private static final Logger logger = LoggerFactory.getLogger(CharacterCommentController.class);
+
     // キャラクターIDでコメントリスト取得
     public List<CharacterComment> selectByCharacterId(String characterId) {
-        return repository.findByCharacterId(characterId);
+
+        logger.info("Fetching comments for characterId: {}", characterId);
+        CharacterComment characterComment = new CharacterComment();
+        characterComment.setCharacterId(characterId);
+        return repository.findByCharacterId(characterComment);
     }
 
     // コメントの追加、編集

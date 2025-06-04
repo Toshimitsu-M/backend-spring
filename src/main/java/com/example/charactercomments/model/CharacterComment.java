@@ -38,6 +38,7 @@ public class CharacterComment {
     }
 
     // ========= 属性（キャラ・ユーザーIDなど） =========
+    @DynamoDbSecondaryPartitionKey(indexNames = {"GSI3_Character"})
     public String getCharacterId() {
         return characterId;
     }
@@ -46,6 +47,7 @@ public class CharacterComment {
         this.characterId = characterId;
     }
 
+    @DynamoDbSecondaryPartitionKey(indexNames = {"GSI2_User"})
     public String getUserId() {
         return userId;
     }
@@ -63,7 +65,7 @@ public class CharacterComment {
     }
 
     // ========= GSI: characterId 単体検索用 =========
-    @DynamoDbSecondaryPartitionKey(indexNames = {"GSI_CharacterId"})
+    
     public String getCharacterIdForGsi() {
         return characterId;
     }
@@ -73,7 +75,7 @@ public class CharacterComment {
     }
 
     // ========= GSI: userId 単体検索用 =========
-    @DynamoDbSecondaryPartitionKey(indexNames = {"GSI_UserId"})
+    
     public String getUserIdForGsi() {
         return userId;
     }

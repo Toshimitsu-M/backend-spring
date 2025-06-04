@@ -1,4 +1,4 @@
 {
   "keyName": { "S": "commentId" },
-  "currentValue": { "N": 0 }
+  "currentValue": { "N": "0" }
 }

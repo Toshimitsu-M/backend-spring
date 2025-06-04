@@ -1,0 +1,8 @@
+{
+  "commentId": { "N": "1" },
+  "updatedAt": { "S": "2025-06-03T10:00:00Z" },
+  "gsiPk": { "S": "character#123_user#456" },
+  "userId": { "S": "456" },
+  "characterId": { "S": "123" },
+  "commentText": { "S": "このキャラめっちゃ好き！" }
+}

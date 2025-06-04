@@ -31,9 +31,9 @@ public class CharacterCommentRepository {
     }
 
     // キャラクターIDで取得
-    public List<CharacterComment> findByCharacterId(String characterId) {
+    public List<CharacterComment> findByCharacterId(CharacterComment characterComment) {
         DynamoDbIndex<CharacterComment> index = table.index("GSI3_Character");
-        QueryConditional condition = QueryConditional.keyEqualTo(Key.builder().partitionValue(characterId).build());
+        QueryConditional condition = QueryConditional.keyEqualTo(Key.builder().partitionValue(characterComment.getCharacterId()).build());
         SdkIterable<Page<CharacterComment>> results = index.query(r -> r.queryConditional(condition));
         List<CharacterComment> comments = new java.util.ArrayList<>();
         for (Page<CharacterComment> page : results) {
