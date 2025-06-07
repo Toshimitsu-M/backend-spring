@@ -26,12 +26,13 @@ public class SecurityConfig {
 				) // ログアウト成功後のリダイレク先URL
 				.authorizeHttpRequests(
 						authz -> authz.requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll()
-								.mvcMatchers("/").permitAll()
-								.mvcMatchers("/general").hasRole("GENERAL")
-								.mvcMatchers("/admin").hasRole("ADMIN")
-								.mvcMatchers("/api/anime").permitAll()
-								.mvcMatchers("/characterComment/next-sequence").permitAll()
-								.mvcMatchers("/characterComment/**").permitAll()
+								.requestMatchers("/").permitAll()
+								.requestMatchers("/general").hasRole("GENERAL")
+								.requestMatchers("/admin").hasRole("ADMIN")
+								.requestMatchers("/api/anime").permitAll()
+								.requestMatchers("/characterComment/next-sequence").permitAll()
+								.requestMatchers("/characterComment/**").permitAll()
+								.requestMatchers("/chat").permitAll()
 								.anyRequest().authenticated())
 				.csrf().disable();
 

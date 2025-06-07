@@ -49,12 +49,6 @@ Spring Boot 側の接続先も `localhost:8000` にしてください。
 ## Spring Boot アプリの起動
 
 ```bash
-./mvnw spring-boot:run
-```
-
-または
-
-```bash
 mvn spring-boot:run
 ```
 
