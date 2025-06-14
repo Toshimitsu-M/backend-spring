@@ -16,10 +16,22 @@ public class ChatService {
 
     public String call(String message) {
         logger.info("Received message: {}", message);
+
+        // 五条悟のキャラクター設定を追加
+        message = "あなたは五条悟です。以下の質問に答えてください。\n" + message;
         String response = chatClient.prompt()
                 .user(message)
                 .call()
                 .content();
         return response;
     }
+
+    //ストリーミング対応のメソッド
+    // public void stream(String message, ChatClient.StreamingResponseHandler handler) {
+    //     logger.info("Streaming message: {}", message);
+    //     chatClient.prompt()
+    //             .user(message)
+    //             .stream(handler)
+    //             .call();    
+    // }
 }

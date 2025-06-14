@@ -32,7 +32,7 @@ public class SecurityConfig {
 								.requestMatchers("/api/anime").permitAll()
 								.requestMatchers("/characterComment/next-sequence").permitAll()
 								.requestMatchers("/characterComment/**").permitAll()
-								.requestMatchers("/chat").permitAll()
+								.requestMatchers("/chat/**").permitAll()
 								.anyRequest().authenticated())
 				.csrf().disable();
 

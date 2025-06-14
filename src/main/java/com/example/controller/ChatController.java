@@ -1,14 +1,17 @@
 package com.example.controller;
 
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.model.ChatRequest;
 import com.example.service.ChatService;
 
 @RestController
 @RequestMapping("/chat")
+@CrossOrigin(origins = "*") // CORS設定
 public class ChatController {
 
     private ChatService chatService;
@@ -17,8 +20,11 @@ public class ChatController {
         this.chatService = chatService;
     }
 
-    @PostMapping
-    public String chat(@RequestBody String message) {
+    
+    @PostMapping("/chat")
+    public String chat(@RequestBody ChatRequest req) {
+        String message = req.getMessage();
+        
         String response = chatService.call(message);
         return response;
     }
