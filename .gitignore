@@ -36,3 +36,4 @@ application-prod.yaml
 infra/infra.drawio
 infra/dynamodb/Dockerfile
 infra/infra.yaml
+app.log

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.mapper.postgres.PostgresCharacterCommentMapper">
+
+    <!-- コメントリスト取得 -->
+    <select id="selectByCharacterId" resultType="com.example.entity.CharacterCommentEntity">
+        SELECT * FROM character_comment WHERE anilist_id = #{anilistId}
+    </select>
+
+    <!-- コメント追加・更新（UPSERT） -->
+    <insert id="save" parameterType="com.example.entity.CharacterCommentEntity">
+        INSERT INTO character_comment (anilist_id, user_id, comment)
+        VALUES (#{anilistId}, #{userId}, #{comment})
+        ON CONFLICT (id) DO UPDATE SET
+            anilist_id = EXCLUDED.anilist_id,
+            user_id = EXCLUDED.user_id,
+            comment = EXCLUDED.comment
+    </insert>
+
+    <!-- コメント削除 -->
+    <delete id="deleteById" parameterType="long">
+        DELETE FROM character_comment WHERE id = #{id}
+    </delete>
+
+</mapper>

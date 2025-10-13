@@ -42,6 +42,12 @@ logging:
         web: DEBUG
         security: DEBUG
 
+
+db:
+  type: postgresqql
+# type: oracle
+# type: dynamodb
+
 # spring:
 #   autoconfigure:
 #     exclude: org.springframework.boot.devtools.autoconfigure.DevToolsDataSourceAutoConfiguration

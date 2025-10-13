@@ -4,7 +4,7 @@ import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.stereotype.Component;
 
-import com.example.model.Teacher;
+import com.example.entity.rdb.Teacher;
 import com.example.service.TeacherService;
 
 @Component

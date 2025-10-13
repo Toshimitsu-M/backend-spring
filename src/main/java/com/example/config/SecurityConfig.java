@@ -27,14 +27,13 @@ public class SecurityConfig {
 				.authorizeHttpRequests(
 						authz -> authz.requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll()
 								.requestMatchers("/").permitAll()
-								.requestMatchers("/general").hasRole("GENERAL")
-								.requestMatchers("/admin").hasRole("ADMIN")
 								.requestMatchers("/api/anime").permitAll()
 								.requestMatchers("/characterComment/next-sequence").permitAll()
 								.requestMatchers("/characterComment/**").permitAll()
 								.requestMatchers("/chat/**").permitAll()
-								.anyRequest().authenticated())
-				.csrf().disable();
+								.requestMatchers("/general").hasRole("GENERAL")
+								.requestMatchers("/admin").hasRole("ADMIN")
+				.anyRequest().authenticated());
 
 		;
 

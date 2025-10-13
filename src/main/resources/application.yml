@@ -7,3 +7,10 @@ spring:
       base-url: https://api.openai.com/
       chat:
         model: gpt-4o-mini
+
+logging:
+  file:
+    name: app.log   # ログファイル名（相対パス or 絶対パスOK）
+  level:
+    root: INFO      # 全体のログレベル
+    com.example: DEBUG  # パッケージ単位でレベル変更可能

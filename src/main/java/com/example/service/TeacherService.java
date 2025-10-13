@@ -9,34 +9,32 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.example.mapper.TeacherMapper;
-import com.example.model.Teacher;
+import com.example.entity.rdb.Teacher;
+import com.example.mapper.oracle.mapper.TeacherMapper;
 
 import lombok.RequiredArgsConstructor;
-
-
 
 @RequiredArgsConstructor
 @Transactional
 @Service
 public class TeacherService {
 	private final TeacherMapper mapper;
-	
+
 	public Page<Teacher> selectAll(Pageable pageable) {
-		RowBounds rowBounds = new RowBounds((int)pageable.getOffset(), pageable.getPageSize());
+		RowBounds rowBounds = new RowBounds((int) pageable.getOffset(), pageable.getPageSize());
 		List<Teacher> teachers = mapper.selectAll(rowBounds);
 		Long total = mapper.count();
 		return new PageImpl<>(teachers, pageable, total);
 	}
-	
+
 	public List<Teacher> selectAll() {
 		return mapper.selectAll();
 	}
-	
+
 	public Teacher selectByPrimaryKey(Long id) {
 		return mapper.selectByPrimaryKey(id);
 	}
-	
+
 	public void save(Teacher teacher) {
 		if (teacher.getId() == null) {
 			mapper.insert(teacher);
@@ -44,7 +42,7 @@ public class TeacherService {
 			mapper.updateByPrimaryKey(teacher);
 		}
 	}
-	
+
 	public void deleteByPrimaryKey(Long id) {
 		mapper.deleteByPrimaryKey(id);
 	}

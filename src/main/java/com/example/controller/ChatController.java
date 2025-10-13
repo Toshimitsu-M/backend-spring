@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.model.ChatRequest;
+import com.example.entity.rdb.ChatRequest;
 import com.example.service.ChatService;
 
 @RestController

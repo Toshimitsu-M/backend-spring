@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
-import com.example.model.Teacher;
+import com.example.entity.rdb.Teacher;
 import com.example.service.TeacherService;
 
 import lombok.RequiredArgsConstructor;
