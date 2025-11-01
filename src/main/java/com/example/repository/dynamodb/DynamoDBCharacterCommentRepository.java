@@ -9,6 +9,7 @@ import software.amazon.awssdk.enhanced.dynamodb.model.Page;
 import software.amazon.awssdk.enhanced.dynamodb.model.QueryConditional;
 import software.amazon.awssdk.enhanced.dynamodb.Key;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
@@ -30,6 +31,12 @@ public class DynamoDBCharacterCommentRepository implements CharacterCommentRepos
     public DynamoDBCharacterCommentRepository(DynamoDbEnhancedClient enhancedClient, SequenceService sequenceService) {
         this.table = enhancedClient.table("characterComments", TableSchema.fromBean(DynamoCharacterComment.class));
         this.sequenceService = sequenceService;
+    }
+
+    @Override
+    public List<CharacterComment> selectAll() {
+        // 実装内容を書く
+        return new ArrayList<>(); // とりあえず仮実装
     }
 
     // キャラクターIDで取得
@@ -94,11 +101,10 @@ public class DynamoDBCharacterCommentRepository implements CharacterCommentRepos
         return comments;
     }
 
-
     // コメントの追加・更新
     @Override
     public void save(CharacterComment comment) {
-        // コメントシーケンス取得　UUIDにするか検討中 comment.setCommentId(UUID.randomUUID().toString());
+        // コメントシーケンス取得 UUIDにするか検討中 comment.setCommentId(UUID.randomUUID().toString());
         sequenceService.getNextSequence("commentId");
         DynamoCharacterComment dynamoComment = new DynamoCharacterComment();
         dynamoComment.setCommentId(sequenceService.getNextSequence("commentId"));
@@ -109,7 +115,6 @@ public class DynamoDBCharacterCommentRepository implements CharacterCommentRepos
         table.putItem(dynamoComment);
 
     }
-
 
     // キャラクターコメントIDで削除
     @Override

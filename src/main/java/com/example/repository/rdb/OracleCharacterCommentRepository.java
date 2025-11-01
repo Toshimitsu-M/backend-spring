@@ -22,6 +22,19 @@ public class OracleCharacterCommentRepository implements CharacterCommentReposit
         this.mapper = mapper;
     }
 
+    @Override
+    public List<CharacterComment> selectAll() {
+        List<RdbCharacterComment> comments = mapper.selectAll();
+        return comments.stream().map(rdbComment -> {
+            CharacterComment comment = new CharacterComment();
+            comment.setId(rdbComment.getId());
+            comment.setAnilistId(rdbComment.getAnilistId());
+            comment.setUserId(rdbComment.getUserId());
+            comment.setComment(rdbComment.getComment());
+            return comment;
+        }).toList();
+    }
+
     // キャラクターIDで取得
     @Override
     public List<CharacterComment> selectByCharacterId(String characterId) {

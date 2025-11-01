@@ -8,6 +8,7 @@ import com.example.entity.rdb.RdbCharacterComment;
 
 @Mapper
 public interface PostgresCharacterCommentMapper {
+    List<RdbCharacterComment> selectAll();
     List<RdbCharacterComment> selectByCharacterId(String anilistId);
 
     List<RdbCharacterComment> selectByUserId(String userId);

@@ -63,6 +63,19 @@ public class PostgresCharacterCommentRepository implements CharacterCommentRepos
         }).toList();
     }
 
+    // 全件取得
+    public List<CharacterComment> selectAll() {
+        List<RdbCharacterComment> comments = mapper.selectAll();
+        return comments.stream().map(rdbComment -> {
+            CharacterComment comment = new CharacterComment();
+            comment.setId(rdbComment.getId());
+            comment.setAnilistId(rdbComment.getAnilistId());
+            comment.setUserId(rdbComment.getUserId());
+            comment.setComment(rdbComment.getComment());
+            return comment;
+        }).toList();
+    }
+
     // コメントの追加・更新
     @Override
     public void save(CharacterComment comment) {

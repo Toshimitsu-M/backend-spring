@@ -34,6 +34,12 @@ public class CharacterCommentController {
         return service.selectByCharacterId(characterId);
     }
 
+    // コメント全件取得
+    @GetMapping("/all")
+    public List<CharacterComment> getAllComments() {
+        return service.selectAll();
+    }
+
     // コメントの追加、編集
 	@PostMapping("/process")
 	public ResponseEntity<?> process(@RequestBody CharacterComment comment) {

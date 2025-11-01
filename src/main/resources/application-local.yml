@@ -9,11 +9,18 @@ mybatis:
   configuration:
     map-underscore-to-camel-case: true
   type-aliases-package: com.example.model
-  mapper-locations: classpath*:/com/example/mapper/*.xml
+  mapper-locations: classpath*:/com/example/mapper/**/*.xml
 
 spring:
   main:
     allow-circular-references: true
+
+  # PostgreSQL DB設定
+  datasource:
+    url: jdbc:postgresql://db:5432/appdb
+    username: postgres
+    password: mypassword
+    driver-class-name: org.postgresql.Driver
 
   # Oracle DB設定（必要に応じてコメントを外してください）
   # datasource:

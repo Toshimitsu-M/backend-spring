@@ -27,6 +27,11 @@ public class CharacterCommentService {
         return repository.selectByCharacterId(characterId);
     }
 
+    // 全件取得
+    public List<CharacterComment> selectAll() {
+        return repository.selectAll();
+    }
+
     // コメントの追加、編集
     public void save(CharacterComment comment) {
         repository.save(comment);
