@@ -1,5 +1,7 @@
 package com.example.controller;
 
+import java.util.Optional;
+
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -14,10 +16,10 @@ import com.example.service.ChatService;
 @CrossOrigin(origins = "*") // CORS設定
 public class ChatController {
 
-    private ChatService chatService;
+    private final Optional<ChatService> chatServiceOptional;
 
-    public ChatController(ChatService chatService) {
-        this.chatService = chatService;
+    public ChatController(Optional<ChatService> chatServiceOptional) {
+        this.chatServiceOptional = chatServiceOptional;
     }
 
     
@@ -25,7 +27,11 @@ public class ChatController {
     public String chat(@RequestBody ChatRequest req) {
         String message = req.getMessage();
         
-        String response = chatService.call(message);
+        if (chatServiceOptional.isEmpty()) {
+            return "Chat機能は利用できません。OPENAI_API_KEYが設定されていないためです。";
+        }
+        
+        String response = chatServiceOptional.get().call(message);
         return response;
     }
 }

@@ -1,0 +1,35 @@
+# ============================================
+# 開発環境設定（Development）
+# Docker ComposeでPostgreSQLコンテナを使用
+# ============================================
+
+spring:
+  # PostgreSQL DB設定（Docker Compose内のdbコンテナに接続）
+  datasource:
+    url: jdbc:postgresql://db:5432/appdb
+    username: postgres
+    password: mypassword
+    driver-class-name: org.postgresql.Driver
+
+# データベースタイプ（PostgreSQL）
+db:
+  type: postgresql
+
+# AWS DynamoDB設定（ローカル開発用）
+aws:
+  dynamodb:
+    region: ap-northeast-1
+    endpoint: http://localhost:8000  # LocalStack等のローカル環境
+    accessKeyId: dummy
+    secretAccessKey: dummy
+
+# ログ設定（開発環境は詳細ログ）
+logging:
+  level:
+    com:
+      example:
+        mapper: DEBUG
+    org:
+      springframework:
+        web: DEBUG
+        security: DEBUG

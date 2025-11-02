@@ -16,7 +16,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 @Transactional
 @Service
-@ConditionalOnProperty(name = "db.type", havingValue = "postgresqql")
+@ConditionalOnProperty(name = "db.type", havingValue = "postgresql")
 public class PostgresCharacterCommentRepository implements CharacterCommentRepository {
     private final PostgresCharacterCommentMapper mapper;
 

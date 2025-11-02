@@ -1,42 +1,40 @@
 # ============================================
-# 本番環境設定（Production）
+# ステージング環境設定（Staging）
 # AWS RDS PostgreSQLを使用
 # ============================================
 
 spring:
   # PostgreSQL DB設定（AWS RDS）
   datasource:
-    url: jdbc:postgresql://${DB_HOST:prod-db.example.com}:${DB_PORT:5432}/${DB_NAME:appdb}
+    url: jdbc:postgresql://${DB_HOST:staging-db.example.com}:${DB_PORT:5432}/${DB_NAME:appdb}
     username: ${DB_USERNAME:admin}
     password: ${DB_PASSWORD}
     driver-class-name: org.postgresql.Driver
     hikari:
-      maximum-pool-size: 20
-      minimum-idle: 10
+      maximum-pool-size: 10
+      minimum-idle: 5
       connection-timeout: 30000
-      idle-timeout: 600000
-      max-lifetime: 1800000
 
 # データベースタイプ（PostgreSQL）
 db:
   type: postgresql
 
-# AWS DynamoDB設定（本番環境）
+# AWS DynamoDB設定（ステージング環境）
 aws:
   dynamodb:
     region: ap-northeast-1
-    # endpoint 未設定 → 本番DynamoDBに接続
+    # endpoint 未設定 → AWS RDSに接続
     accessKeyId: ${AWS_ACCESS_KEY_ID}
     secretAccessKey: ${AWS_SECRET_ACCESS_KEY}
 
-# ログ設定（本番環境は WARN 以上のみ）
+# ログ設定（ステージング環境）
 logging:
   level:
-    root: WARN
     com:
       example:
-        mapper: ERROR
+        mapper: INFO
     org:
       springframework:
-        web: WARN
+        web: INFO
         security: WARN
+
