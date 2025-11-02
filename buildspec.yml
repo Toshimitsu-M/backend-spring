@@ -1,5 +1,34 @@
 version: 0.2
 
+# ================================================================
+# AWS CodeBuild用ビルド仕様書
+# ECSデプロイメント用のDockerイメージをビルド&プッシュ
+# ================================================================
+#
+# 環境変数について
+# ================================================================
+# 以下の環境変数は ECS Task Definition で設定する必要があります
+#
+# 【必須環境変数（全環境共通）】
+# - SPRING_PROFILES_ACTIVE: 環境指定（dev/staging/prod）
+#
+# 【本番環境用（prod）】
+# - DB_HOST: RDS PostgreSQL エンドポイント
+# - DB_PORT: RDS ポート（通常 5432）
+# - DB_NAME: データベース名
+# - DB_USERNAME: RDS ユーザー名
+# - DB_PASSWORD: RDS パスワード（Secrets Manager 推奨）
+#
+# 【AWS DynamoDB設定（本番環境）】
+# - AWS_ACCESS_KEY_ID: DynamoDB用アクセスキー
+# - AWS_SECRET_ACCESS_KEY: DynamoDB用シークレットキー（Secrets Manager 推奨）
+#
+# 【オプション】
+# - OPENAI_API_KEY: OpenAI API キー（チャット機能を使用する場合）
+#
+# 注意: 本番環境では Secrets Manager を使用して機密情報を管理してください
+# ================================================================
+
 phases:
   pre_build:
     commands:
@@ -14,14 +43,19 @@ phases:
       - echo Build started on `date`
       - echo Building the Docker image...
       - docker build -t $REPOSITORY_URI:$IMAGE_TAG .
+      # 最新タグも付与（オプション）
+      - docker tag $REPOSITORY_URI:$IMAGE_TAG $REPOSITORY_URI:latest
 
   post_build:
     commands:
       - echo Build completed on `date`
       - echo Pushing the Docker image...
       - docker push $REPOSITORY_URI:$IMAGE_TAG
+      - docker push $REPOSITORY_URI:latest
       - echo Writing image definitions file...
-      - printf '[{"name":"container-anime","imageUri":"%s"}]' $REPOSITORY_URI:$IMAGE_TAG > imagedefinitions.json
+      # ECSデプロイ用のimagedefinitions.jsonを生成
+      # コンテナ名はECS Task Definitionで定義
+      - printf '[{"name":"animeapp-api-spring","imageUri":"%s"}]' $REPOSITORY_URI:$IMAGE_TAG > imagedefinitions.json
 
 artifacts:
   files: imagedefinitions.json
