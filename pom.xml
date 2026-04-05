@@ -192,7 +192,11 @@
 			<artifactId>mysql-connector-java</artifactId>
 			<scope>runtime</scope>
 		</dependency> -->
-  
+  <dependency>
+    <groupId>com.example.backend</groupId>
+    <artifactId>backend-spring-common</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+</dependency>
 	</dependencies>
 
 
