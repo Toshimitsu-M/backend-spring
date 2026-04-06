@@ -2,7 +2,7 @@
 # 1. 共通モジュールをビルドしてローカルMavenリポジトリにインストール
 FROM maven:3.9-eclipse-temurin-17 AS common-builder
 WORKDIR /common
-COPY ../backend-spring-common /common
+COPY backend-spring-common /common
 RUN mvn install -DskipTests
 
 # 2. Spring Bootアプリをビルド
