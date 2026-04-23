@@ -2,7 +2,8 @@ package com.example.controller;
 
 import com.example.domain.CharacterComment;
 import com.example.service.CharacterCommentService;
-
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 
 import org.slf4j.Logger;
@@ -17,35 +18,30 @@ import java.io.ByteArrayInputStream;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
 
-/**
- * CharacterCommentController
- * キャラクターに対するコメント投稿API
- * @author 
- */
+@Tag(name = "CharacterComment", description = "キャラクターコメント API")
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/characterComment")
-@CrossOrigin(origins = "*") // CORS設定
+@CrossOrigin(origins = "*")
 public class CharacterCommentController {
 
     private static final Logger logger = LoggerFactory.getLogger(CharacterCommentController.class);
-    
-    // DI
+
     private final CharacterCommentService service;
 
-    // キャラクターIDでコメントリスト取得
+    @Operation(summary = "キャラクター別コメント取得", description = "指定したキャラクター ID のコメント一覧を返します")
     @GetMapping("/all/{characterId}")
     public List<CharacterComment> getByCharacter(@PathVariable String characterId) {
         return service.selectByCharacterId(characterId);
     }
 
-    // コメント全件取得
+    @Operation(summary = "全コメント取得", description = "全キャラクターのコメント一覧を返します")
     @GetMapping("/all")
     public List<CharacterComment> getAllComments() {
         return service.selectAll();
     }
 
-    // コメントCSV出力
+    @Operation(summary = "コメント CSV エクスポート", description = "全コメントを CSV ファイルとしてダウンロードします")
     @GetMapping(value = "/export", produces = "text/csv")
     public ResponseEntity<InputStreamResource> exportCommentsCsv() {
         List<CharacterComment> comments = service.selectAll();
@@ -86,23 +82,18 @@ public class CharacterCommentController {
         return escaped;
     }
 
-    // コメントの追加、編集
-	@PostMapping("/process")
-	public ResponseEntity<?> process(@RequestBody CharacterComment comment) {
-		System.out.println("保存コントローラ、コンソールログだよ");
-		logger.info("保存コントローラデバッグだよ");
+    @Operation(summary = "コメント追加・更新", description = "コメントを新規登録または更新します")
+    @PostMapping("/process")
+    public ResponseEntity<?> process(@RequestBody CharacterComment comment) {
+        logger.info("保存コントローラデバッグだよ");
+        service.save(comment);
+        return ResponseEntity.ok("Saved successfully");
+    }
 
-		service.save(comment);
-		return ResponseEntity.ok("Saved successfully");
-	}
-    
-
-    // コメント削除
-	@DeleteMapping("/delete/{id}")
-	public ResponseEntity<?> deleteTeacher(@PathVariable Long id) {
-		service.deleteByPrimaryKey(id);
-		return ResponseEntity.ok("Deleted successfully");
-
-	}
+    @Operation(summary = "コメント削除", description = "指定した ID のコメントを削除します")
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<?> deleteTeacher(@PathVariable Long id) {
+        service.deleteByPrimaryKey(id);
+        return ResponseEntity.ok("Deleted successfully");
+    }
 }
-

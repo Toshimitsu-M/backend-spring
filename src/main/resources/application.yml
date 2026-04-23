@@ -47,3 +47,20 @@ aws:
     access-key-id: ${AWS_ACCESS_KEY_ID:}
     secret-access-key: ${AWS_SECRET_ACCESS_KEY:}
     endpoint: ${AWS_S3_ENDPOINT:}
+
+# ============================================
+# Swagger UI / OpenAPI
+# アクセス: http://localhost:8080/swagger-ui.html
+# JSON スペック: http://localhost:8080/v3/api-docs
+# ============================================
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html
+    operations-sorter: method
+    tags-sorter: alpha
+    display-request-duration: true
+  api-docs:
+    path: /v3/api-docs
+  packages-to-scan: com.example.controller
+  # 本番環境では false にすることを推奨（環境別 yml で上書き）
+  show-actuator: false
